@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>TPSODL Arrear Filter</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="upload-container">
+
+    <h1>TPSODL Arrear Filter Dashboard</h1>
+
+    <p>
+        Upload customer coordinate CSV to generate arrear heatmap dashboard.
+    </p>
+
+    {% if message %}
+    <div class="message">
+        {{ message }}
+    </div>
+    {% endif %}
+
+    <form method="POST"
+          enctype="multipart/form-data"
+          action="{{ url_for('tpsodl_arrear_filter') }}">
+
+        <label for="csv_file">
+            Upload CSV File
+        </label>
+
+        <input
+            type="file"
+            id="csv_file"
+            name="csv_file"
+            accept=".csv"
+            title="Upload customer CSV file"
+            required
+        >
+
+        <button type="submit">
+            Upload CSV
+        </button>
+
+    </form>
+
+    <div class="format-box">
+        <h3>Required CSV columns</h3>
+        <code>
+            point_name, latitude, longitude, due_date, arrear_amount, status
+        </code>
+    </div>
+
+</div>
+
+</body>
+</html>

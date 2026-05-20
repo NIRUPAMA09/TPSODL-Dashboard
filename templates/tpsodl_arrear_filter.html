@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>TPSODL Arrear Filter Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header class="dashboard-header">
+
+    <div>
+        <h1>TPSODL Arrear Filter Dashboard</h1>
+        <p>Customer arrear and due-date location filter</p>
+    </div>
+
+    <div class="user-box">
+        <span>Logged in as {{ username }}</span>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+</header>
+
+<section class="upload-bar">
+
+    <form method="POST"
+          enctype="multipart/form-data"
+          action="{{ url_for('tpsodl_arrear_filter') }}">
+
+        <label for="csv_file">
+            Upload New CSV
+        </label>
+
+        <input
+            type="file"
+            id="csv_file"
+            name="csv_file"
+            accept=".csv"
+            title="Upload customer CSV file"
+        >
+
+        <button type="submit">
+            Upload CSV
+        </button>
+
+    </form>
+
+    {% if message %}
+    <span class="message">
+        {{ message }}
+    </span>
+    {% endif %}
+
+</section>
+
+<section class="filters">
+
+    <form method="GET"
+          action="{{ url_for('tpsodl_arrear_filter') }}">
+
+        <label for="region">Region</label>
+        <select id="region"
+                name="region"
+                title="Select region">
+            {% for item in ["All", "North", "Central", "South"] %}
+            <option value="{{ item }}"
+                    {% if region == item %}selected{% endif %}>
+                {{ item }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="timeline">Due Timeline</label>
+        <select id="timeline"
+                name="timeline"
+                title="Select due timeline">
+            {% for item in ["All", "0-7 Days", "8-15 Days", "16-30 Days", "30+ Days"] %}
+            <option value="{{ item }}"
+                    {% if timeline == item %}selected{% endif %}>
+                {{ item }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="arrear">Arrear Amount</label>
+        <select id="arrear"
+                name="arrear"
+                title="Select arrear amount">
+            {% for item in ["All", "0-5K", "5K-10K", "10K-25K", "25K+"] %}
+            <option value="{{ item }}"
+                    {% if arrear == item %}selected{% endif %}>
+                {{ item }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="status">Status</label>
+        <select id="status"
+                name="status"
+                title="Select customer status">
+            {% for item in ["All", "Pending", "Completed"] %}
+            <option value="{{ item }}"
+                    {% if status == item %}selected{% endif %}>
+                {{ item }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="theme">Map Theme</label>
+        <select id="theme"
+                name="theme"
+                title="Select map theme">
+            <option value="light"
+                    {% if theme == "light" %}selected{% endif %}>
+                Light
+            </option>
+
+            <option value="dark"
+                    {% if theme == "dark" %}selected{% endif %}>
+                Dark
+            </option>
+        </select>
+
+        <button type="submit">
+            Apply Filters
+        </button>
+
+    </form>
+
+</section>
+
+<section class="cards">
+
+    <div class="card">
+        <h3>Total Customers</h3>
+        <p>{{ stats.total_customers if stats is defined else 0 }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Pending</h3>
+        <p>{{ stats.pending_customers if stats is defined else 0 }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Completed</h3>
+        <p>{{ stats.completed_customers if stats is defined else 0 }}</p>
+    </div>
+
+    <div class="card">
+        <h3>Total Arrear</h3>
+        <p>₹{{ "{:,.2f}".format(stats.total_arrear if stats is defined else 0) }}</p>
+    </div>
+
+</section>
+
+<div class="search-note">
+    🔎 Use the search box on the map to find customer account numbers like <b>acc_25</b>.
+</div>
+
+<section class="map-section">
+
+    <iframe
+        src="{{ url_for('map_view') }}"
+        title="Customer arrear map">
+    </iframe>
+
+</section>
+
+<section class="summary">
+
+    <div class="summary-header">
+        <h2>Region Summary</h2>
+
+        <a href="{{ url_for('download_report') }}">
+            Download Report
+        </a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Region</th>
+            <th>Customers</th>
+            <th>Total Arrear</th>
+            <th>Average Arrear</th>
+            <th>Max Overdue Days</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for row in summary %}
+        <tr>
+            <td>{{ row.region }}</td>
+            <td>{{ row.customer_count }}</td>
+            <td>₹{{ "{:,.2f}".format(row.total_arrear_amount) }}</td>
+            <td>₹{{ "{:,.2f}".format(row.average_arrear_amount) }}</td>
+            <td>{{ row.max_overdue_days }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</section>
+
+</body>
+</html>

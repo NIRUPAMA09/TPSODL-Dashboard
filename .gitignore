@@ -1,0 +1,10 @@
+uploads_private/
+output_private/
+*.csv
+*.xlsx
+*.xls
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
