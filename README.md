@@ -31,6 +31,7 @@ Interactive GIS-based arrear monitoring dashboard for utility corporations using
 
 ## Smart Search
 Search customer accounts like:
+
 ```text
 acc_25
 ```
@@ -43,12 +44,6 @@ Upload CSV files in this format:
 ```csv
 point_name,latitude,longitude,due_date,arrear_amount,status
 ```
-
-admin / admin123
-officer1 / officer123
-officer2 / officer456
-```
-
 # Technologies Used
 
 - Python
@@ -72,6 +67,7 @@ git clone YOUR_REPO_LINK
 ```
 
 ## 2. Install Requirements
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -87,8 +83,6 @@ Open:
 ```text
 http://127.0.0.1:5000
 ```
-
----
 
 # Deployment
 
