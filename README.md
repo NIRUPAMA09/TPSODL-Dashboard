@@ -43,6 +43,7 @@ Upload CSV files in this format:
 
 ```csv
 point_name,latitude,longitude,due_date,arrear_amount,status
+
 ```
 # Technologies Used
 
@@ -128,6 +129,7 @@ Each customer marker shows:
 - Division/subdivision polygon overlays
 - Real-time feeder monitoring
 - Mobile PWA support
+-
 
 # Developed For
 
