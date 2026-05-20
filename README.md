@@ -42,12 +42,8 @@ Upload CSV files in this format:
 
 ```csv
 point_name,latitude,longitude,due_date,arrear_amount,status
-acc_25,19.30549812,84.81856537,18-06-2022,10457,Pending
 ```
 
-# Default Login Credentials
-
-```text Instances
 admin / admin123
 officer1 / officer123
 officer2 / officer456
@@ -138,7 +134,6 @@ Each customer marker shows:
 - Division/subdivision polygon overlays
 - Real-time feeder monitoring
 - Mobile PWA support
--
 
 # Developed For
 
