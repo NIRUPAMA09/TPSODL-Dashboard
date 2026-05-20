@@ -3,6 +3,7 @@ __pycache__/
 
 uploads_private/*
 output_private/*
+static/generated_map.html
 
 *.csv
 *.xlsx
@@ -12,4 +13,3 @@ output_private/*
 *.kmz
 
 .env
-static/generated_map.html
