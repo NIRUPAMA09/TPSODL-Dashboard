@@ -7,7 +7,6 @@ static/generated_map.html
 
 *.csv
 *.xlsx
-*.png
 *.pdf
 *.kml
 *.kmz
